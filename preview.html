@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akira Language Academy</title>
+  <meta name="description" content="Akira Language Academy — Japanese language education and study abroad support in Bangla, English, and Japanese." />
+  <style>
+    :root{
+      --bg:#fbf6ef;
+      --card:rgba(255,255,255,.88);
+      --text:#241815;
+      --muted:#6a5a52;
+      --primary:#b91c1c;
+      --primary-dark:#7f1d1d;
+      --accent:#a16207;
+      --line:#eadfce;
+      --shadow:0 18px 48px rgba(53,31,18,.10);
+      --radius:22px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(185,28,28,.12), transparent 32%),
+        radial-gradient(circle at 18% 22%, rgba(255,183,77,.10), transparent 18%),
+        linear-gradient(180deg, #fffaf4 0%, var(--bg) 100%);
+      line-height:1.6;
+      position:relative;
+      overflow-x:hidden;
+    }
+    body::before, body::after{
+      content:""; position:fixed; inset:auto; pointer-events:none; z-index:0; opacity:.14;
+      background-repeat:no-repeat;
+    }
+    body::before{
+      top:90px; right:-50px; width:320px; height:320px;
+      background-image:radial-gradient(circle, rgba(185,28,28,.9) 0 38%, transparent 39%),
+        radial-gradient(circle, rgba(255,255,255,.85) 0 11%, transparent 12%),
+        radial-gradient(circle, rgba(255,255,255,.85) 0 11%, transparent 12%),
+        radial-gradient(circle, rgba(255,255,255,.85) 0 11%, transparent 12%),
+        radial-gradient(circle, rgba(255,255,255,.85) 0 11%, transparent 12%),
+        radial-gradient(circle, rgba(255,255,255,.85) 0 11%, transparent 12%);
+      background-size:100% 100%, 32px 32px, 32px 32px, 32px 32px, 32px 32px, 32px 32px;
+      background-position:center, 44% 42%, 58% 34%, 61% 48%, 36% 52%, 50% 59%;
+    }
+    body::after{
+      left:-70px; bottom:100px; width:300px; height:200px;
+      background-image:radial-gradient(ellipse at center, rgba(59,130,246,.18) 0 33%, transparent 34%),
+        radial-gradient(ellipse at center, rgba(59,130,246,.18) 0 33%, transparent 34%),
+        radial-gradient(ellipse at center, rgba(59,130,246,.18) 0 33%, transparent 34%);
+      background-size:110px 54px, 110px 54px, 110px 54px;
+      background-position:0 95px, 65px 60px, 130px 95px;
+    }
+    header, main, footer{position:relative; z-index:1;}
+    .container{width:min(var(--max), calc(100% - 32px)); margin:0 auto;}
+    .topbar{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(16px);
+      background:rgba(255,250,244,.78);
+      border-bottom:1px solid rgba(234,223,206,.9);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      padding:14px 0;
+    }
+    .brand{display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit;}
+    .logo{
+      width:58px; height:58px; border-radius:16px;
+      display:block; object-fit:cover;
+      background:#fff; border:2px solid rgba(255,255,255,.75);
+      box-shadow:0 12px 28px rgba(127,29,29,.18);
+      flex:0 0 auto;
+    }
+    .hero-logo-wrap{
+      display:flex; justify-content:center; margin-bottom:14px;
+    }
+    .hero-logo{
+      width:min(100%, 320px); border-radius:22px; background:#fffaf8;
+      border:1px solid var(--line); box-shadow:0 14px 34px rgba(127,29,29,.12); padding:10px;
+    }
+    .brand h1{margin:0; font-size:1.05rem; line-height:1.15}
+    .brand p{margin:2px 0 0; color:var(--muted); font-size:.9rem}
+    .navlinks{display:flex; gap:16px; flex-wrap:wrap;}
+    .navlinks a{
+      text-decoration:none; color:var(--muted); font-weight:600; font-size:.95rem;
+      padding:8px 10px; border-radius:10px;
+    }
+    .navlinks a:hover{background:#fff; color:var(--text)}
+    .hero{padding:72px 0 34px;}
+    .hero-grid{
+      display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex; gap:8px; align-items:center;
+      background:#fff; border:1px solid var(--line); border-radius:999px;
+      padding:8px 14px; color:var(--muted); font-weight:700; font-size:.9rem;
+      box-shadow: var(--shadow);
+    }
+    .hero h2{
+      font-size:clamp(2.2rem, 6vw, 4.8rem);
+      line-height:1.04; letter-spacing:-.04em; margin:18px 0 14px;
+    }
+    .hero .subtitle{font-size:1.1rem; color:var(--muted); max-width:58ch;}
+    .cta{display:flex; gap:14px; flex-wrap:wrap; margin-top:24px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 18px; border-radius:14px; font-weight:800; text-decoration:none;
+      transition:.2s ease; border:1px solid transparent;
+    }
+    .btn-primary{background:var(--primary); color:#fff; box-shadow:0 12px 28px rgba(214,31,38,.22)}
+    .btn-primary:hover{background:var(--primary-dark); transform:translateY(-1px)}
+    .btn-secondary{background:#fff; color:var(--text); border-color:var(--line)}
+    .btn-secondary:hover{transform:translateY(-1px)}
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.94) 0%, rgba(255,251,246,.92) 100%);
+      border:1px solid var(--line); border-radius:28px; box-shadow:var(--shadow);
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:""; position:absolute; inset:auto -60px -85px auto; width:220px; height:220px;
+      background:radial-gradient(circle, rgba(185,28,28,.12) 0 44%, transparent 45%);
+      border-radius:50%;
+    }
+    .stack{display:grid; gap:16px;}
+    .mini{
+      border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.92); padding:18px;
+    }
+    .mini h3{margin:0 0 10px; font-size:1rem}
+    .mini p{margin:0; color:var(--muted)}
+    .section{padding:34px 0;}
+    .section-title{margin-bottom:18px;}
+    .section-title h3{margin:0 0 8px; font-size:2rem; letter-spacing:-.03em}
+    .section-title p{margin:0; color:var(--muted)}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:22px;
+      backdrop-filter: blur(6px);
+    }
+    .lang-head{display:flex; align-items:center; gap:10px; margin-bottom:8px; font-weight:900; font-size:1.06rem}
+    .lang-body{color:var(--text); font-size:1.04rem}
+    .lang-body p{margin:0}
+    .feature-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+    .feature-card{
+      background:rgba(255,255,255,.92); border:1px solid var(--line); border-radius:22px; padding:24px; box-shadow:var(--shadow);
+      position:relative; overflow:hidden;
+    }
+    .feature-card::after{
+      content:""; position:absolute; right:-28px; bottom:-28px; width:92px; height:92px;
+      background:radial-gradient(circle, rgba(185,28,28,.08) 0 58%, transparent 59%);
+      border-radius:50%;
+    }
+    .feature-card h4{margin:8px 0 10px; font-size:1.22rem}
+    .feature-card ul{margin:0; padding-left:22px}
+    .feature-card li{margin:10px 0}
+    .service-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+    .footer{
+      margin-top:34px; border-top:1px solid var(--line);
+      padding:28px 0 48px; color:var(--muted);
+    }
+    .footer strong{color:var(--text)}
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.feature-grid,.service-grid{grid-template-columns:1fr;}
+      .nav{align-items:flex-start; flex-direction:column;}
+      .hero{padding-top:42px}
+      .hero-card{order:-1}
+    }
+    @media (max-width: 640px){
+      .container{width:min(var(--max), calc(100% - 20px));}
+      .hero h2{font-size:2.2rem}
+      .section-title h3{font-size:1.6rem}
+      .card,.feature-card,.hero-card{padding:18px}
+      .navlinks{gap:8px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home">
+        <img class="logo" src="logo.png" alt="Akira Language Academy logo" />
+        <div>
+          <h1>Akira Language Academy</h1>
+          <p>বাংলা / English / 日本語</p>
+        </div>
+      </a>
+      <nav class="navlinks">
+        <a href="#purpose">Purpose</a>
+        <a href="#about">About</a>
+        <a href="#courses">Courses</a>
+        <a href="#services">Services</a>
+        <a href="#study-abroad">Study Abroad</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">🇯🇵 Japanese learning • 桜 inspired theme • 🇧🇩 বাংলা support • 🇬🇧 English guidance</div>
+          <h2>Learn Japanese. Shape your future.</h2>
+          <p class="subtitle">
+            Akira Language Academy provides Japanese language education, JLPT and NAT exam preparation, study abroad guidance, and full support for life in Japan.
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#courses">View Courses</a>
+            <a class="btn btn-secondary" href="#services">See Services</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="Akira Language Academy logo"></div>
+            <div class="stack">
+            <div class="mini">
+              <h3>🇧🇩 বাংলা</h3>
+              <p>জাপানি শিখুন, আপনার ভবিষ্যৎ গড়ুন।<br>Akira Language Academy-তে স্বাগতম।</p>
+            </div>
+            <div class="mini">
+              <h3>🇬🇧 English</h3>
+              <p>Learn Japanese, Shape Your Future.<br>Welcome to Akira Language Academy.</p>
+            </div>
+            <div class="mini">
+              <h3>🇯🇵 日本語</h3>
+              <p>日本語を学び、未来をつかもう。<br>Akira Language Academyへようこそ。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="purpose">
+      <div class="container">
+        <div class="section-title">
+          <h3>Purpose / উদ্দেশ্য / 目的</h3>
+          <p>What Akira Language Academy is for.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="lang-head">🇧🇩 বাংলা</div>
+            <div class="lang-body"><p>জাপানি ভাষা শিক্ষা এবং জাপানে পড়াশোনার সম্পূর্ণ সাপোর্ট প্রদান করা।</p></div>
+          </article>
+          <article class="card">
+            <div class="lang-head">🇬🇧 English</div>
+            <div class="lang-body"><p>Providing Japanese language education and full support for studying in Japan.</p></div>
+          </article>
+          <article class="card">
+            <div class="lang-head">🇯🇵 日本語</div>
+            <div class="lang-body"><p>日本語教育と日本留学のトータルサポートを提供します。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-title">
+          <h3>About / পরিচিতি / 学校紹介</h3>
+          <p>A trusted institute for Japanese language education and study abroad support.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="lang-head">🇧🇩 বাংলা</div>
+            <div class="lang-body"><p>আমরা একটি বিশ্বস্ত প্রতিষ্ঠান, যা জাপানি ভাষা শিক্ষা এবং জাপানে পড়াশোনার পূর্ণাঙ্গ সহায়তা প্রদান করে।</p></div>
+          </article>
+          <article class="card">
+            <div class="lang-head">🇬🇧 English</div>
+            <div class="lang-body"><p>We are a trusted institute providing Japanese language education and full guidance for studying in Japan.</p></div>
+          </article>
+          <article class="card">
+            <div class="lang-head">🇯🇵 日本語</div>
+            <div class="lang-body"><p>当校は、日本語教育と日本留学のための総合サポートを提供する信頼できる学校です。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="courses">
+      <div class="container">
+        <div class="section-title">
+          <h3>📚 Courses / কোর্স / コース</h3>
+          <p>Core courses offered in Bangla, English, and Japanese.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="lang-head">🇧🇩 বাংলা</div>
+            <h4>কোর্সসমূহ</h4>
+            <ul>
+              <li>জাপানি ভাষা কোর্স</li>
+              <li>JLPT প্রস্তুতি</li>
+              <li>কথোপকথন কোর্স</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇬🇧 English</div>
+            <h4>Course List</h4>
+            <ul>
+              <li>Japanese Language Course</li>
+              <li>JLPT Preparation</li>
+              <li>Conversation Course</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇯🇵 日本語</div>
+            <h4>コース一覧</h4>
+            <ul>
+              <li>日本語コース</li>
+              <li>JLPT対策</li>
+              <li>会話コース</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title">
+          <h3>🛠️ Services / সার্ভিস / サービス</h3>
+          <p>Support for visas, living in Japan, and part-time work.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="lang-head">🇧🇩 বাংলা</div>
+            <h4>সেবা</h4>
+            <ul>
+              <li>ভিসা সাপোর্ট</li>
+              <li>জাপানে থাকার সহায়তা</li>
+              <li>পার্ট-টাইম কাজের সহায়তা</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇬🇧 English</div>
+            <h4>Services</h4>
+            <ul>
+              <li>Visa Support</li>
+              <li>Living Support in Japan</li>
+              <li>Part-time Job Support</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇯🇵 日本語</div>
+            <h4>サポート内容</h4>
+            <ul>
+              <li>ビザサポート</li>
+              <li>日本での生活サポート</li>
+              <li>アルバイトサポート</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="study-abroad">
+      <div class="container">
+        <div class="section-title">
+          <h3>🎓 Study Abroad / বিদেশে পড়াশোনা / 留学サポート</h3>
+          <p>Admission, visa processing, and documentation assistance.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="lang-head">🇧🇩 বাংলা</div>
+            <h4>বিদেশে পড়াশোনা</h4>
+            <ul>
+              <li>জাপানের স্কুলে ভর্তি সহায়তা</li>
+              <li>ভিসা প্রসেসিং</li>
+              <li>ডকুমেন্ট সাপোর্ট</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇬🇧 English</div>
+            <h4>Study Abroad Support</h4>
+            <ul>
+              <li>Admission support to Japanese schools</li>
+              <li>Visa processing</li>
+              <li>Documentation support</li>
+            </ul>
+          </article>
+          <article class="feature-card">
+            <div class="lang-head">🇯🇵 日本語</div>
+            <h4>留学サポート</h4>
+            <ul>
+              <li>日本の学校への入学サポート</li>
+              <li>ビザ申請サポート</li>
+              <li>書類サポート</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <strong>Akira Language Academy</strong><br>
+      Multilingual website draft in Bangla, English, and Japanese.<br>
+      You can add contact details, address, WhatsApp, Facebook, or an inquiry form next.
+    </div>
+  </footer>
+</body>
+</html>
